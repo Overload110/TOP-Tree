@@ -91,7 +91,7 @@ class Tree {
             return node;
         }
     }
-    
+
     levelOrder(callback) {
         if (!this.root) {
             return [];
@@ -118,6 +118,60 @@ class Tree {
             }
         }
 
+        return callback ? undefined : results;
+    }
+
+    inOrder(node = this.root, callback) {
+        let results = [];
+        if (node) {
+            if (node.left && callback) {
+                this.inOrder(node.left, callback);
+            }
+            if (callback) {
+                callback(node.data);
+            } else {
+                results.push(node.data);
+            }
+            if (node.right && callback) {
+                this.inOrder(node.right, callback);
+            }
+        }
+        return callback ? undefined : results;
+    }
+
+    preOrder(node = this.root, callback) {
+        let results = [];
+        if (node) {
+            if (callback) {
+                callback(node.data);
+            } else {
+                results.push(node.data);
+            }
+            if (node.left && callback) {
+                this.preOrder(node.left, callback);
+            }
+            if (node.right && callback) {
+                this.preOrder(node.right, callback);
+            }
+        }
+        return callback ? undefined : results;
+    }
+
+    postOrder(node = this.root, callback) {
+        let results = [];
+        if (node) {
+            if (node.left && callback) {
+                this.postOrder(node.left, callback);
+            }
+            if (node.right && callback) {
+                this.postOrder(node.right, callback);
+            }
+            if (callback) {
+                callback(node.data);
+            } else {
+                results.push(node.data);
+            }
+        }
         return callback ? undefined : results;
     }
 }
