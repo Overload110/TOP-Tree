@@ -91,5 +91,33 @@ class Tree {
             return node;
         }
     }
+    
+    levelOrder(callback) {
+        if (!this.root) {
+            return [];
+        }
 
+        let queue = [this.root];
+        let results = [];
+
+        while (queue.length > 0) {
+            let currentNode = queue.shift();
+
+            if (callback) {
+                callback(currentNode.data);
+            } else {
+                results.push(currentNode.data);
+            }
+
+            if (currentNode.left) {
+                queue.push(currentNode.left);
+            }
+
+            if (currentNode.right) {
+                queue.push(currentNode.right);
+            }
+        }
+
+        return callback ? undefined : results;
+    }
 }
