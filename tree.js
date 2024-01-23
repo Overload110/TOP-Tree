@@ -26,4 +26,70 @@ class Tree {
       
         return node;
     }
+
+    insert(value) {
+        this.root = this._insert(this.root, value);
+    }
+
+    _insert(node, value) {
+        if (node === null) {
+            return new Node(value);
+        } else if (value < node.data) {
+            node.left = this._insert(node.left, value);
+        } else if (value > node.data) {
+            node.right = this._insert(node.right, value);
+        }
+        return node;
+    }
+
+    delete(value) {
+        this.root = this._delete(this.root, value);
+    }
+
+    _delete(node, value) {
+        if (node === null) {
+            return null;
+        } else if (value < node.data) {
+            node.left = this._delete(node.left, value);
+        } else if (value > node.data) {
+            node.right = this._delete(node.right, value);
+        } else {
+            if (node.left === null && node.right === null) {
+                node = null;
+            } else if (node.left === null) {
+                node = node.right;
+            } else if (node.right === null) {
+                node = node.left;
+            } else {
+                let tempNode = this._findMinNode(node.right);
+                node.data = tempNode.data;
+                node.right = this._delete(node.right, tempNode.data);
+            }
+        }
+        return node;
+    }
+
+    _findMinNode(node) {
+        if(node.left === null) {
+            return node;
+        }
+        return this._findMinNode(node.left);
+    }
+
+    find(value) {
+        return this._find(this.root, value);
+    }
+
+    _find(node, value) {
+        if (node === null) {
+            return null;
+        } else if (value < node.data) {
+            return this._find(node.left, value);
+        } else if (value > node.data) {
+            return this._find(node.right, value);
+        } else {
+            return node;
+        }
+    }
+
 }
