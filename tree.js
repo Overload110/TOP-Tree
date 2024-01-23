@@ -192,4 +192,22 @@ class Tree {
             return this.depth(node, root.right) + 1;
         }
     }
+
+    isBalanced(node = this.root) {
+        if (node === null) {
+            return true;
+        }
+        const diff = this.height(node.left) - this.height(node.right);
+        if (diff > 1 || diff < -1) {
+            return false;
+        }
+        return this.isBalanced(node.left) && this.isBalanced(node.right);
+    }
+
+    rebalance() {
+        if (!this.isBalanced()) {
+            let sortedArray = this.inOrder();
+            this.root = this.buildTree(sortedArray);
+        }
+    }
 }
