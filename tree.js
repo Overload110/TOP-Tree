@@ -174,4 +174,22 @@ class Tree {
         }
         return callback ? undefined : results;
     }
+
+    height(node) {
+        if (node === null) {
+            return 0;
+        }
+        return Math.max(this.height(node.left), this.height(node.right)) + 1;
+    }
+
+    depth(node, root = this.root) {
+        if (node === root) {
+            return 0;
+        }
+        if (node.data < root.data) {
+            return this.depth(node, root.left) + 1;
+        } else {
+            return this.depth(node, root.right) + 1;
+        }
+    }
 }
